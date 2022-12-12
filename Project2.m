@@ -59,10 +59,21 @@ if ( len > max_len)
 max_len = len;
 xy_long = xy;
 end
+end
 % 确定第二长线段的端点
+max_len1 = 0;
+for k = 1:length(lines)
+xy = [lines(k).point1; lines(k).point2];
+len = norm(lines(k).point1 - lines(k).point2);
+if ( len > max_len1 && len < max_len)
+max_len1 = len;
+xy_long1 = xy;
+end
+end
 % 绘制最长线段
 plot(xy_long(:,1),xy_long(:,2),'LineWidth',2,'Color','red');
 % 绘制第二长的线段
+plot(xy_long1(:,1),xy_long1(:,2),'LineWidth',2,'Color','red');
 % 绘制产生的线段中的最长线段为红色，是我们的识别结果，其余绿色部分是我们
 % 识别出来的线段（疑似结果）
 % 6.对直线进行筛选
