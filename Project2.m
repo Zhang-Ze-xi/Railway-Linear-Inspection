@@ -46,6 +46,7 @@ plot(x,y,'s','color','white');
 lines = houghlines(img3,T,R,P,'FillGap',5,'MinLength',7);
 figure(6);
 imshow(img3), hold on
+title ('识别结果');
 max_len = 0;
 for k = 1:length(lines)
 xy = [lines(k).point1; lines(k).point2];
@@ -74,11 +75,67 @@ end
 plot(xy_long(:,1),xy_long(:,2),'LineWidth',2,'Color','red');
 % 绘制第二长的线段
 plot(xy_long1(:,1),xy_long1(:,2),'LineWidth',2,'Color','red');
+% 得到两条直线的端点
+x1 = xy_long(1,1);
+y1 = xy_long(1,2);
+x2 = xy_long(2,1);
+y2 = xy_long(2,2);
+x3 = xy_long1(1,1);
+y3 = xy_long1(1,2);
+x4 = xy_long1(2,1);
+y4 = xy_long1(2,2);
+% 6.对图像进行透视变换
+% 透视变换的原理是将图像中的两条直线变为平行的两条直线
+% 由于我们已经得到了两条直线的端点，所以我们可以直接进行透视变换
+movingPoints = [x1,y1;x2,y2;x3,y3;x4,y4];
+fixedPoints = [x2,y2 - max_len1;x2,y2;x4,y4 - max_len;x4,y4];
+tform = fitgeotrans(movingPoints,fixedPoints,'projective');
+img4 = imwarp(img3,tform);
+figure(7);
+imshow(img4);
+title('透视变换后的图像');
+% 7.对图像进行霍夫变换
+[H,T,R] = hough(img4);
+figure(8);
+imshow(H,[],'XData',T,'YData',R,'InitialMagnification','fit');
+xlabel('\theta'), ylabel('\rho');
+axis on, axis normal, hold on;
+P = houghpeaks(H,5,'threshold',ceil(0.3*max(H(:))));
+x = T(P(:,2)); y = R(P(:,1));
+plot(x,y,'s','color','white');
+lines = houghlines(img4,T,R,P,'FillGap',5,'MinLength',7);
+figure(9);
+imshow(img4), hold on
+title ('识别结果');
+max_len = 0;
+for k = 1:length(lines)
+xy = [lines(k).point1; lines(k).point2];
+plot(xy(:,1),xy(:,2),'LineWidth',2,'Color','green');
+% 绘制线条的起点和终点
+plot(xy(1,1),xy(1,2),'x','LineWidth',2,'Color','yellow');
+plot(xy(2,1),xy(2,2),'x','LineWidth',2,'Color','red');
+% 确定最长线段的端点
+len = norm(lines(k).point1 - lines(k).point2);
+if ( len > max_len)
+max_len = len;
+xy_long = xy;
+end
+end
+% 确定第二长线段的端点
+max_len1 = 0;
+for k = 1:length(lines)
+xy = [lines(k).point1; lines(k).point2];
+len = norm(lines(k).point1 - lines(k).point2);
+if ( len > max_len1 && len < max_len)
+max_len1 = len;
+xy_long1 = xy;
+end
+end
+% 绘制最长线段
+plot(xy_long(:,1),xy_long(:,2),'LineWidth',2,'Color','red');
+% 绘制第二长的线段
+plot(xy_long1(:,1),xy_long1(:,2),'LineWidth',2,'Color','red');
+% 连接线段
+% 由于我们的图像是鸟瞰图，所以我们可以将图像中的线段连接起来，得到我们想要的结果
 % 绘制产生的线段中的最长线段为红色，是我们的识别结果，其余绿色部分是我们
 % 识别出来的线段（疑似结果）
-% 6.对直线进行筛选
-% 7.对直线进行变换
-% 8.对图像进行透视变换
-% 9.显示图像
-% 10.保存图像
-% 11.结束程序
