@@ -20,7 +20,7 @@ figure(1);
 imshow(img);
 title('灰度化处理后的图像');
 % 2.对图像进行灰度拉伸处理
-img1 =imadjust(img,[0.2,0.9],[]); 
+img1 =imadjust(img,[0.5,1],[]); 
 figure(2);
 imshow(img1);
 title('灰度拉伸处理后的图像');
@@ -50,10 +50,10 @@ max_len = 0;
 for k = 1:length(lines)
 xy = [lines(k).point1; lines(k).point2];
 plot(xy(:,1),xy(:,2),'LineWidth',2,'Color','green');
-% Plot beginnings and ends of lines
+% 绘制线条的起点和终点
 plot(xy(1,1),xy(1,2),'x','LineWidth',2,'Color','yellow');
 plot(xy(2,1),xy(2,2),'x','LineWidth',2,'Color','red');
-% Determine the endpoints of the longest line segment
+% 确定最长线段的端点
 len = norm(lines(k).point1 - lines(k).point2);
 if ( len > max_len)
 max_len = len;
