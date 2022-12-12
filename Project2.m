@@ -20,7 +20,7 @@ figure(1);
 imshow(img);
 title('灰度化处理后的图像');
 % 2.对图像进行灰度拉伸处理
-img1 =imadjust(img,[0.2,0.65],[]); 
+img1 =imadjust(img,[0.2,0.9],[]); 
 figure(2);
 imshow(img1);
 title('灰度拉伸处理后的图像');
@@ -35,6 +35,31 @@ figure(4);
 imshow(img3);
 title('膨胀处理后的图像');
 % 5.对图像进行霍夫变换
+[H,T,R] = hough(img3);
+figure(5);
+imshow(H,[],'XData',T,'YData',R,'InitialMagnification','fit');
+xlabel('\theta'), ylabel('\rho');
+axis on, axis normal, hold on;
+P = houghpeaks(H,5,'threshold',ceil(0.3*max(H(:))));
+x = T(P(:,2)); y = R(P(:,1));
+plot(x,y,'s','color','white');
+lines = houghlines(img3,T,R,P,'FillGap',5,'MinLength',7);
+figure(6);
+imshow(img3), hold on
+max_len = 0;
+for k = 1:length(lines)
+xy = [lines(k).point1; lines(k).point2];
+plot(xy(:,1),xy(:,2),'LineWidth',2,'Color','green');
+% Plot beginnings and ends of lines
+plot(xy(1,1),xy(1,2),'x','LineWidth',2,'Color','yellow');
+plot(xy(2,1),xy(2,2),'x','LineWidth',2,'Color','red');
+% Determine the endpoints of the longest line segment
+len = norm(lines(k).point1 - lines(k).point2);
+if ( len > max_len)
+max_len = len;
+xy_long = xy;
+end
+end
 % 6.对直线进行筛选
 % 7.对直线进行变换
 % 8.对图像进行透视变换
