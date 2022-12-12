@@ -20,7 +20,7 @@ figure(1);
 imshow(img);
 title('灰度化处理后的图像');
 % 2.对图像进行灰度拉伸处理
-img1 =imadjust(img,[0.5,1],[]); 
+img1 =imadjust(img,[0.3,0.9],[]); 
 figure(2);
 imshow(img1);
 title('灰度拉伸处理后的图像');
@@ -59,7 +59,12 @@ if ( len > max_len)
 max_len = len;
 xy_long = xy;
 end
-end
+% 确定第二长线段的端点
+% 绘制最长线段
+plot(xy_long(:,1),xy_long(:,2),'LineWidth',2,'Color','red');
+% 绘制第二长的线段
+% 绘制产生的线段中的最长线段为红色，是我们的识别结果，其余绿色部分是我们
+% 识别出来的线段（疑似结果）
 % 6.对直线进行筛选
 % 7.对直线进行变换
 % 8.对图像进行透视变换
