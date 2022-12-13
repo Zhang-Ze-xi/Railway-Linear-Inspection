@@ -8,8 +8,8 @@ close all;
 % 首先我们选定图像中的感兴趣区域，然后对其进行灰度变换
 % 之后，我们对其进行二值化处理，然后进行形态学处理
 % 最后，我们对其进行霍夫变换，提取出轨道线
-% 导入图像
-img = imread('F:\VS Code\Matlab\Project\Project1\text.jpg');
+% 键入图片名称导入图像
+img = imread(input('请输入图片名称：(注意后面要加上文件格式例如：1.jpg)', 's'));
 figure(1);
 imshow(img);
 title('原图像');
