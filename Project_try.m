@@ -15,8 +15,21 @@ imshow(img);
 title('原图像');
 % 测量图像大小
 [height, width, channel] = size(img); % height为图像高度，width为图像宽度，channel为图像通道数
+% 在工作区显示图像大小
+disp(['图像大小为：（height x width x channel）', num2str(height), ' x ', num2str(width), ' x ', num2str(channel)]);
 % 选定感兴趣区域
-img1 = img(1:132, 1:359, :) ; % img1为感兴趣区域，img(1:height, 1:width, :);
+% 输入感兴趣区域的左上角坐标和右下角坐标
+% 例如：左上角坐标为（1，1），右下角坐标为（132，359）
+% 则输入：1 1 132 359
+% 之后，程序会自动将感兴趣区域提取出来
+% 输入四个值
+x1 = input('请输入感兴趣区域左上角横坐标：');
+y1 = input('请输入感兴趣区域左上角纵坐标：');
+x2 = input('请输入感兴趣区域右下角横坐标：');
+y2 = input('请输入感兴趣区域右下角纵坐标：');
+% 本执行例中，我们选定的感兴趣区域为（1，1）到（132，359）
+% 即x1=1, y1=1, x2=132, y2=359
+img1 = img(x1:x2, y1:y2, :) ; % img1为感兴趣区域，img(1:height, 1:width, :);
 figure(2);
 imshow(img1);
 title('感兴趣区域');
