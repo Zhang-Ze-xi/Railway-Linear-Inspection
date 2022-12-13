@@ -29,7 +29,7 @@ x2 = input('请输入感兴趣区域右下角横坐标：');
 y2 = input('请输入感兴趣区域右下角纵坐标：');
 % 本执行例中，我们选定的感兴趣区域为（1，1）到（132，359）
 % 即x1=1, y1=1, x2=132, y2=359
-img1 = img(x1:x2, y1:y2, :) ; % img1为感兴趣区域，img(1:height, 1:width, :);
+img1 = img(y1:y2, x1:x2, :) ; % img1为感兴趣区域，img(1:height, 1:width, :);
 figure(2);
 imshow(img1);
 title('感兴趣区域');
