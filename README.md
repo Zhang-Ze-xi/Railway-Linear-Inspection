@@ -9,6 +9,7 @@
    + 中值滤波
    + 高斯滤波
 3. Hough变换直线检测
+
 注意使用过程中，需要修改程序中的图像路径，以及感兴趣区域的坐标。
 # Railroad-Linear-inspection
 Open the "Railway_Linear_Inspection_Version1.m"
@@ -21,6 +22,7 @@ This program is used for railway-linear-inspection and consists of the following
    + Median filtering
    + Gaussian filtering
 3. Hough transform straight line detection
+
 Note that during use, you need to modify the image path in the program, as well as the coordinates of the region of interest.
 
 Translated with www.DeepL.com/Translator (free version)
